@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>App de Clima</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{{ weather.classe_clima if weather else ''}}">
+    <div class="container">
+        <h1>Previsão do Tempo</h1>
+        
+        <form method="POST" class="search-box">
+            <input type="text" name="cidade" placeholder="Ex: Natal, BR" required>
+            <button type="submit">Buscar</button>
+        </form>
+
+        {% if weather %}
+            <div class="resultado">
+                {% if weather.erro %}
+                    <p>{{ weather.erro }}</p>
+                {% else %}
+                    <h2>{{ weather.cidade }}</h2>
+                    <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@4x.png" alt="Clima">
+                    <p class="temp">{{ weather.temp|round|int }}°C</p>
+                    <p class="desc">{{ weather.desc }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
